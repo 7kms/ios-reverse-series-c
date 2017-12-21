@@ -41,10 +41,18 @@ void test1()
         unsigned int  c;
     } debug_size2_t;
     
+    struct bs{
+        int a:30;
+        int b:2;
+        int c:6;
+    }data;
+    
     printf("debug_size1_t size=%lu,debug_size2_t size=%lu\r\n", sizeof(debug_size1_t), sizeof(debug_size2_t));
     
     //1.debug_size1_t 存储空间分布为a(1byte)+空闲(3byte)+b(4byte)+c(1byte)+空闲(3byte)=12(byte)。
     //2.debug_size2_t 存储空间分布为a(1byte)+b(1byte)+空闲(2byte)+c(4byte)=8(byte)。
+    
+    printf("%lu\n",sizeof(data));
 }
 
 int main(){
