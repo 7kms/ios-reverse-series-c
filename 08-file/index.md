@@ -44,3 +44,52 @@ int main()
 }
 
 ```
+
+
+### 读取文件
+```c
+int fgetc(FILE *fp);
+```
+`fgetc()` 函数从 fp 所指向的输入文件中读取一个字符。返回值是读取的字符，如果发生错误则返回 EOF。下面的函数允许您从流中读取一个字符串：
+```c
+char *fgets(char *buf,int n, FILE *fp);
+```
+函数`fgets`从 fp 所指向的输入流中读取 `n - 1` 个字符。它会把读取的字符串复制到缓冲区 buf，并在最后追加一个 null 字符来终止字符串。如果这个函数在读取最后一个字符之前就遇到一个换行符 '\n' 或文件的末尾 EOF，则只会返回读取到的字符，包括换行符。
+
+也可以使用 `int fscanf(FILE *fp, const char *format, ...)` 函数来从文件中读取字符串，但是在遇到第一个空格字符时，它会停止读取
+```c
+#include <stdio.h>
+int main()
+{
+   FILE *fp = NULL;
+   char buff[255];
+ 
+   fp = fopen("/tmp/test.txt", "r");
+   fscanf(fp, "%s", buff);
+   printf("1 : %s\n", buff );
+ 
+   fgets(buff, 255, (FILE*)fp);
+   printf("2: %s\n", buff );
+   
+   fgets(buff, 255, (FILE*)fp);
+   printf("3: %s\n", buff );
+   fclose(fp);
+}
+```
+
+```c
+int fseek(FILE *stream, long offset, int whence);
+```
+`fseek` 设置当前读写点到 `offset` 处, `whence` 可以是 `SEEK_SET`,`SEEK_CUR`,`SEEK_END` 这些值决定是从文件头、当前点和文件尾计算偏移量 `offset`.
+你可以定义一个文件指针 `FILE *fp`,当你打开一个文件时，文件指针指向开头，你要指到多少个字节，只要控制偏移量就好，例如, 相对当前位置往后移动一个字节：`fseek(fp,1,SEEK_CUR)`; 中间的值就是偏移量。 如果你要往前移动一个字节，直接改为负值就可以：`fseek(fp,-1,SEEK_CUR)`。
+
+
+
+### 二进制I/O函数
+下面两个函数用于二进制输入和输出
+```c
+size_t fread(void *ptr, size_t size_of_elements,size_t  number_of_elements, FILE *a_file);
+              
+size_t fwrite(const void *ptr, size_t size_of_elements,size_t number_of_elements, FILE *a_file);
+
+```
