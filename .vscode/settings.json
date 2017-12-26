@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*.wxss": "css",
+        "*.wxml": "html",
+        "*.webapp": "json",
+        "*.mix": "vue",
+        "stdlib.h": "c"
+    }
+}
